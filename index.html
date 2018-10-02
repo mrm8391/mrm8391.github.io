@@ -55,24 +55,30 @@
         <div class="row">
           <div class="col-lg-10 mx-auto">
             <h1 class="text-uppercase">
-              <strong>Computational Geometry Project Title</strong>
+              <strong>Elastic Surface Fracture</strong>
             </h1>
             <hr>
           </div>
           <div class="col-lg-8 mx-auto">
-            <p class="text-faded mb-5">Project introduction here</p>
+            <p class="text-faded mb-5">
+              The goal of this project is to emulate how different kinds of surfaces will break when in contact with a moving, indestructible object. We will start with only one form of the surface, this form being a simple, thin wall. Each wall will have a different elasticity/rigidity and tensile strengths. 
+
+              The main materials to be simulated will be stone, glass, metal, rubber, and skin tissue. The first two are rigid, while the last two are elastic. Metal will have properties of both; it is strong like the rigid surfaces, but relatively soft (i.e. will not have a rigid fracture pattern).
+              
+              The indestructible objects used will be tested in stages: point, circle, prism, sphere and hand. The point object will have the most centralized force, and the circle and prism will be more spread out, based on their vertices or lack thereof. The sphere, on the other hand, will have different forces based on how close the contact is to the center of the sphere’s circular projection onto the wall. The hand will demonstrate multiple contact points. Additionally, these force distributions will be adjusted based on angle of impact.
+              </p>
             <hr>
           </div>
           <div class="col-lg-8 mx-auto">
-              <p class="text-faded mb-5">Contributors</p>
-              <ul class="list-group contributors">
-                <li class="list-group-item list-group-item-info">Maximillian McMullen</li>
-                <li class="list-group-item list-group-item-info">Tristan Manning</li>
-              </ul>
-              <br>
-              <br>
-              <a class="btn btn-primary btn-xl js-scroll-trigger" href="#algorithms">Dive in!</a>
-            </div>
+            <p class="text-faded mb-3">Contributors</p>
+            <ul class="list-group contributors">
+              <li class="list-group-item list-group-item-info">Maximillian McMullen</li>
+              <li class="list-group-item list-group-item-info">Tristan Manning</li>
+            </ul>
+            <br>
+            <br>
+            <a class="btn btn-primary btn-xl js-scroll-trigger" href="#algorithms">Dive in!</a>
+          </div>
         </div>
       </div>
     </header>
@@ -83,7 +89,13 @@
           <div class="col-lg-8 mx-auto text-center">
             <h2 class="section-heading text-dark">Algorithm Overview</h2>
             <hr class="dark my-4">
-            <p class="text-faded text-dark mb-4">We intend to use algorithm A and B.</p>
+            <p class="text-faded text-dark mb-4">
+                The main algorithms for this project are the Voronoi Diagrams, Delaunay Triangulation and Convex Hulls.
+
+                The shattering and fracture patterns will be simulated with Voronoi diagrams and Delaunay Triangulation. Delaunay Triangulation is useful for centralizing the fracture pattern. We will also research methods of changing the shard shape of the Voronoi diagrams (such as wood and the different crystalline structures). Much of this is explained in Jose Esteve’s project write-up (https://www.joesfer.com/?p=60). 
+                
+                The main idea of this project, however, is to apply different fracture patterns based on the surface material and on the object’s geometry. For the latter, we will also research Convex Hulls and its application in three-dimensional space. This will allow the elastic surfaces to stretch around the contact points of the moving object without simply copying the object’s form.
+                </p>
             <a class="btn btn-light btn-xl js-scroll-trigger" href="#timeline">Project Timeline</a>
           </div>
         </div>
@@ -202,12 +214,14 @@
           <div class="col-lg-8 mx-auto text-center">
             <h2 class="section-heading text-white">Resources</h2>
             <hr class="light my-4">
-            <p class="text-faded mb-4">We intend to use algorithm A and B.</p>	
             
             <div id="sourcelist">
               <ol>
-                  <li><p>Source 1</p></li>
-                  <li><p>Source 2</p></li>
+                  <li><p><a href="https://www.ti.inf.ethz.ch/ew/lehre/CG12/lecture/Chapter%2010.pdf">Voronoi Diagrams</a></p></li>
+                  <li><p><a href="https://research.engineering.wustl.edu/~pless/506/l17.html">Delaunay Triangulation</a></p></li>
+                  <li><p><a href="https://www.joesfer.com/?p=60">Voronoi Shattering</a></p></li>
+                  <li><p><a href="https://www.joesfer.com/?p=69">Voronoi Shattering 2</a></p></li>
+                  <li><p><a href="https://www.sciencedirect.com/science/article/pii/S0097849312000350">3D Convex Hulls</a></p></li>
               </ol>
             </div>
           </div>

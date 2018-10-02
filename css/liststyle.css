@@ -5,7 +5,7 @@ http://old.marcofolio.net/css/8_different_ways_to_beautifully_style_your_lists.h
 */
 
 /* LIST #2 */
-#sourcelist { width:320px; }
+#sourcelist { width:520px; }
 #sourcelist ol { font-style:italic; font-family:Georgia, Times, serif; font-size:24px; color:#bfe1f1;  }
 #sourcelist ol li { }
 #sourcelist ol li p { padding:8px; font-style:normal; font-family:Arial; font-size:13px; color:#eee; border-left: 1px solid #999; }
