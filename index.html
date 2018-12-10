@@ -57,27 +57,17 @@
             <h1 class="text-uppercase">
               <strong>Elastic Surface Fracture</strong>
             </h1>
+            <h3>By Maximillian McMullen and Tristan Manning</h2>
             <hr>
           </div>
           <div class="col-lg-8 mx-auto">
             <p class="text-faded mb-5">
-              The goal of this project is to emulate how different kinds of surfaces will break when in contact with a moving, indestructible object. We will start with only one form of the surface, this form being a simple, thin wall. Each wall will have a different elasticity/rigidity and tensile strengths. 
-
-              The main materials to be simulated will be stone, glass, metal, rubber, and skin tissue. The first two are rigid, while the last two are elastic. Metal will have properties of both; it is strong like the rigid surfaces, but relatively soft (i.e. will not have a rigid fracture pattern).
-              
-              The indestructible objects used will be tested in stages: point, circle, prism, sphere and hand. The point object will have the most centralized force, and the circle and prism will be more spread out, based on their vertices or lack thereof. The sphere, on the other hand, will have different forces based on how close the contact is to the center of the sphere’s circular projection onto the wall. The hand will demonstrate multiple contact points. Additionally, these force distributions will be adjusted based on angle of impact.
+              The goal of this project is to simulate the stretchy properties of rubber. A simple object is pressed into a rubber sheet, with the sheet conforming, and eventually tearing from the strain.
               </p>
-            <hr>
           </div>
           <div class="col-lg-8 mx-auto">
-            <p class="text-faded mb-3">Contributors</p>
-            <ul class="list-group contributors">
-              <li class="list-group-item list-group-item-info">Maximillian McMullen</li>
-              <li class="list-group-item list-group-item-info">Tristan Manning</li>
-            </ul>
-            <br>
-            <br>
-            <a class="btn btn-primary btn-xl js-scroll-trigger" href="#algorithms">Dive in!</a>
+            <a class="btn btn-primary btn-xl js-scroll-trigger" href="#algorithms">Project Details</a>
+            <a class="btn btn-primary btn-xl js-scroll-trigger" href="#simulation">Skip to the cool stuff!</a>
           </div>
         </div>
       </div>
@@ -87,122 +77,48 @@
       <div class="container mr-1">
         <div class="row">
           <div class="col-lg-8 mx-auto text-center">
-            <h2 class="section-heading text-dark">Algorithm Overview</h2>
+            <h2 class="section-heading text-dark">Project Overview</h2>
             <hr class="dark my-4">
             <p class="text-faded text-dark mb-4">
-                The main algorithms for this project are the Voronoi Diagrams, Delaunay Triangulation and Convex Hulls.
+                Discuss basics of project physics and algorithms here
 
-                The shattering and fracture patterns will be simulated with Voronoi diagrams and Delaunay Triangulation. Delaunay Triangulation is useful for centralizing the fracture pattern. We will also research methods of changing the shard shape of the Voronoi diagrams (such as wood and the different crystalline structures). Much of this is explained in Jose Esteve’s project write-up (https://www.joesfer.com/?p=60). 
-                
-                The main idea of this project, however, is to apply different fracture patterns based on the surface material and on the object’s geometry. For the latter, we will also research Convex Hulls and its application in three-dimensional space. This will allow the elastic surfaces to stretch around the contact points of the moving object without simply copying the object’s form.
+                Bullet poitns to cover:
+                -Background information about the problem.
+                -What are your specific inputs and outputs (show a visualization, if possible).
+                -What are the needs for the problem domain -- is it important that you find the optimal solution? why or why not?
+                -Describe your algorithm and show example results.
+                -Give a complexity analysis of your algorithm, and also show measured running time for different sizes of inputs
                 </p>
-            <a class="btn btn-light btn-xl js-scroll-trigger" href="#timeline">Project Timeline</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container ml-1">
+        <div class="row">
+          <div class="col-lg-8 mx-auto text-center">
+            <h2 class="section-heading text-dark">Existing Work</h2>
+            <hr class="dark my-4">
+            <p class="text-faded text-dark mb-4">
+                Discuss related projects here, maybe some spring-mesh demos or collision detection.
+                Bullet points to cover:
+                -Are there related projects by others that tackle the same problem. How?
+                
+                </p>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="timeline">
+    <section id="simulation">
       <div class="container">
         <div class="row">
           <div class="col-lg-12 text-center">
-            <h2 class="section-heading">Project Timeline and Work Distribution</h2>
+            <h2 class="section-heading">Simulation</h2>
             <hr class="my-4">
           </div>
 
           <div class="col-lg-12 text-center">
-            <table class="table">
-              <thead class="thead-dark">
-                <tr>
-                  <th scope="col">Week</th>
-                  <th scope="col">Maximillian's Focus</th>
-                  <th scope="col">Tristan's Focus</th>
-                  <th scope="col">Deliverable</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">4</th>
-                  <td>Create basic website</td>
-                  <td>Research algorithms to use</td>
-                  <td>Basic site with project summary</td>
-                </tr>
-                <tr>
-                  <th scope="row">5</th>
-                  <td>Look into libraries/tools to use, research algorithms</td>
-                  <td>Research algorithms</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <th scope="row">6</th>
-                  <td>Learn libraries and basic visualization</td>
-                  <td>Begin algorithm implementations</td>
-                  <td>Week 6 presentation</td>
-                </tr>
-                <tr>
-                  <th scope="row">7</th>
-                  <td>Algorithm implementation</td>
-                  <td>Algorithm implementation</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <th scope="row">8</th>
-                  <td>Algorithm implementation</td>
-                  <td>Algorithm implementation</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <th scope="row">9</th>
-                  <td>Work on midterm presentation</td>
-                  <td>Create basic demo of our work so far</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <th scope="row">10</th>
-                  <td>Planning, take a break</td>
-                  <td>Planning, take a break</td>
-                  <td>Week 10 presentation</td>
-                </tr>
-                <tr>
-                  <th scope="row">11</th>
-                  <td>Visualization and final demo</td>
-                  <td>Design more use cases for algorithm (ie different materials, different scenarios)</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <th scope="row">12</th>
-                  <td>Final code touches, finalize website</td>
-                  <td>Final code touches, documentation</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <th scope="row">13</th>
-                  <td>Presentation</td>
-                  <td>Presentation</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <th scope="row">14</th>
-                  <td>Ideally, nothing</td>
-                  <td>Ideally, nothing</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <th scope="row">15</th>
-                  <td>Ideally, nothing</td>
-                  <td>Ideally, nothing</td>
-                  <td>Final presentation</td>
-                </tr>
-                <tr>
-                  <th scope="row">16</th>
-                  <td>Ideally, nothing</td>
-                  <td>Ideally, nothing</td>
-                  <td>Final submission</td>
-                </tr>
-                
-
-              </tbody>
-            </table>
+            put the simulation here
           </div>
         </div>
       </div>
@@ -212,16 +128,17 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-8 mx-auto text-center">
-            <h2 class="section-heading text-white">Resources</h2>
+            <h2 class="section-heading text-white">Resources (cite sources, used code, and related links)</h2>
             <hr class="light my-4">
             
             <div id="sourcelist">
               <ol>
-                  <li><p><a href="https://www.ti.inf.ethz.ch/ew/lehre/CG12/lecture/Chapter%2010.pdf">Voronoi Diagrams</a></p></li>
+                  <!-- <li><p><a href="https://www.ti.inf.ethz.ch/ew/lehre/CG12/lecture/Chapter%2010.pdf">Voronoi Diagrams</a></p></li>
                   <li><p><a href="https://research.engineering.wustl.edu/~pless/506/l17.html">Delaunay Triangulation</a></p></li>
                   <li><p><a href="https://www.joesfer.com/?p=60">Voronoi Shattering</a></p></li>
                   <li><p><a href="https://www.joesfer.com/?p=69">Voronoi Shattering 2</a></p></li>
-                  <li><p><a href="https://www.sciencedirect.com/science/article/pii/S0097849312000350">3D Convex Hulls</a></p></li>
+                  <li><p><a href="https://www.sciencedirect.com/science/article/pii/S0097849312000350">3D Convex Hulls</a></p></li> -->
+                  <li><p><a href="http://www.freepik.com">Cover image at top of page designed by Freepik (used with license)</a></p></li>
               </ol>
             </div>
           </div>
