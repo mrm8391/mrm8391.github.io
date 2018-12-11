@@ -1,3 +1,5 @@
+/* Custom Bootstrap Creative theme overrides */
+
 .list-group{
     display:inline-block;
 }
@@ -7,12 +9,12 @@
     background-image: linear-gradient(to right, grey 1px, transparent 1px), linear-gradient(to bottom, grey 1px, transparent 1px);
 }
 
-#timeline {
-    background-image: linear-gradient(white,rosybrown);
+#simulation {
+    background-image: linear-gradient(white,#9248CF);
 }
 
 #resources {
-    background-color: rebeccapurple;
+    background-image: linear-gradient(#9248CF, black);
 }
 
 header.masthead {
@@ -24,4 +26,40 @@ header.masthead {
     height: auto;
     padding-top: 100px;
     padding-bottom: 50px;
+}
+
+/* make buttons purple */
+.btn-primary{
+    background-color: #CF42D4;
+    border-color: #FFFFFF;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active{
+    color: #fff;
+    background-color: #E4B0EB!important;
+}
+
+a:hover{
+    color: #E4B0EB ;
+}
+
+hr{
+    border-color: #DB95DE;
+}
+
+h1{
+    color: #8F0C94;
+    text-shadow:
+    -1px -1px 0 #FFFFFF,
+    1px -1px 0 #FFFFFF,
+    -1px 1px 0 #FFFFFF,
+    1px 1px 0 #FFFFFF;  
+}
+
+h2{
+    color: #6807B8;
+}
+
+a{
+    color: #C30BDB ;
 }

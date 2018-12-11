@@ -1,0 +1,22 @@
+{
+  "name": "elasticsurfacefracture",
+  "version": "1.0.0",
+  "description": "This is a simulation demonstrating both spring properties and Delaunay Triangulation.",
+  "main": "Config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrm8391/ElasticSurfaceFracture.git"
+  },
+  "author": "Maximillian McMullen and Tristan Manning",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mrm8391/ElasticSurfaceFracture/issues"
+  },
+  "homepage": "https://github.com/mrm8391/ElasticSurfaceFracture#readme",
+  "dependencies": {
+    "delaunator": "^3.0.2"
+  }
+}

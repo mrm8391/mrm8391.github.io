@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Creative - Start Bootstrap Theme</title>
+    <title>Elastic Surface Fracture</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -25,6 +25,7 @@
     <link href="css/creative.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/custom.css">
     <link rel="stylesheet" href="css/liststyle.css">
+    <link href="css/esf.css" rel="stylesheet">
 
   </head>
 
@@ -57,13 +58,14 @@
             <h1 class="text-uppercase">
               <strong>Elastic Surface Fracture</strong>
             </h1>
-            <h3>By Maximillian McMullen and Tristan Manning</h2>
+            <h3 class="text-faded">By Maximillian McMullen and Tristan Manning</h2>
             <hr>
           </div>
           <div class="col-lg-8 mx-auto">
             <p class="text-faded mb-5">
               The goal of this project is to simulate the stretchy properties of rubber. A simple object is pressed into a rubber sheet, with the sheet conforming, and eventually tearing from the strain.
               </p>
+              <p class="text-faded">Code and technical details at: (placeholder, will put repository url here)</p>
           </div>
           <div class="col-lg-8 mx-auto">
             <a class="btn btn-primary btn-xl js-scroll-trigger" href="#algorithms">Project Details</a>
@@ -77,12 +79,23 @@
       <div class="container mr-1">
         <div class="row">
           <div class="col-lg-8 mx-auto text-center">
-            <h2 class="section-heading text-dark">Project Overview</h2>
+            <h2 class="section-heading">Project Overview</h2>
             <hr class="dark my-4">
             <p class="text-faded text-dark mb-4">
                 Discuss basics of project physics and algorithms here
 
-                Bullet poitns to cover:
+                With elastic surfaces, when an object pushes into it, that surface stretches out and conforms to the shape 
+                of the object. If the object keeps pushing into the surface, the surface will eventually begin to rip. 
+                The surface physics can be simplified to a mesh of spring mass pairs. To tear the surface, springs that reach 
+                their respective maximum lengths are removed from the particles' force dependencies. 
+                With a perfect grid mesh, these springs will rip in a relatively square pattern, which looks quite unrealistic. 
+                This gives motivation to use a less uniform pattern for the mesh, i.e. a Delaunay Triangulation.
+
+                Inputs:
+                The user of this simulation can experiment with different parameters. For the Delaunay Triangulation itself, 
+                the user may adjust the density of the plane tessellation. In other words, the higher the number, the more points 
+                that will be triangulated. This is set to a default 50.
+                Bullet points to cover:
                 -Background information about the problem.
                 -What are your specific inputs and outputs (show a visualization, if possible).
                 -What are the needs for the problem domain -- is it important that you find the optimal solution? why or why not?
@@ -99,10 +112,11 @@
             <h2 class="section-heading text-dark">Existing Work</h2>
             <hr class="dark my-4">
             <p class="text-faded text-dark mb-4">
-                Discuss related projects here, maybe some spring-mesh demos or collision detection.
-                Bullet points to cover:
-                -Are there related projects by others that tackle the same problem. How?
-                
+                The spring-mass-damper model is used to represent the elastic properties of the plane. This is commonly used in animations to replicate cloth physics. <a href="https://www.khanacademy.org/partner-content/pixar/simulation/hair-simulation-code/v/particles">Pixar has an online course detailing how this is done.</a> 
+ 
+              There are other ways of modeling non-linearly elastic properties as well; <a href="https://graphics.stanford.edu/~mdfisher/cloth.html">this site discusses several different ways of implementing them.</a> 
+ 
+              Lastly, while we use simplified collision detection, realistic object collision and deformation can be modeled with the recently developed <a href="https://www.youtube.com/watch?v=No3daypHoa4">BD-Trees</a>. 
                 </p>
           </div>
         </div>
@@ -117,19 +131,40 @@
             <hr class="my-4">
           </div>
 
-          <div class="col-lg-12 text-center">
-            put the simulation here
-          </div>
+          <div class="col-lg-9" id="simulationParent">
+            <canvas id="simulationCanvas">
+              Elastic Surface Fracture Simulation
+            </canvas>
+         </div>
+          
+          <div class="col-lg-3 text-center" id="confControls">
+            <button class="ConfOption" id="initializeId">Initialize/Reset</button>
+            
+            <label class="ConfOption">Paused: <input id="pauseId" type="checkbox"></label>
+            <label class="ConfOption">Damping enabled: <input id="dampId" type="checkbox"></label>
+            <label class="ConfOption">Material tearing enabled: <input id="tearId" type="checkbox"></label>
+            <label class="ConfOption">Tearing visibility enabled: <input id="tearVisibleId" type="checkbox"></label>
+            <label class="ConfOption">Cube visible: <input id="cubeVisibleId" type="checkbox"></label>
+            <button class="ConfOption" id="cameraId">Camera toggle</button>
+            <label class="ConfOption">Plane wireframe visible: <input id="wireframeId" type="checkbox"></label>
+            
+            <p><b>Geometry related constants (changes apply on simulation reset/initialization)</b></p>
+            <label class="ConfOption">Density of plane tesselation: <input type="text" id="planeLevelId"></label>
+            <label class="ConfOption">Object descend rate: <input type="text" id="objectDescendId"></label>
+            <label class="ConfOption">Width of cube object: <input type="text" id="cubeWidthId"></label>
+            <label class="ConfOption">Object stop point (z-axis): <input type="text" id="stopPointId"></label>
+            <label class="ConfOption">Max stretch factor for springs: <input type="text" id="maxStretchId"></label>
+        </div>
         </div>
       </div>
     </section>
 
     <section class="" id="resources">
-      <div class="container">
+      <div class="simContainer">
         <div class="row">
           <div class="col-lg-8 mx-auto text-center">
-            <h2 class="section-heading text-white">Resources (cite sources, used code, and related links)</h2>
-            <hr class="light my-4">
+            <h2 class="section-heading text-faded">Resources (cite sources, used code, and related links)</h2>
+            <hr class="my-4">
             
             <div id="sourcelist">
               <ol>
@@ -146,18 +181,35 @@
       </div>
     </section>
 
-
-    <!-- Bootstrap core JavaScript -->
+    <!-- Libraries for Bootstrap Creative theme -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Plugin JavaScript -->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
     <script src="vendor/scrollreveal/scrollreveal.min.js"></script>
     <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
-
-    <!-- Custom scripts for this template -->
     <script src="js/creative.min.js"></script>
+
+    <!-- Libraries for Elastic Surface Fracture -->
+    <script src="js/libraries/three.min.js"></script>
+    <script src="js/libraries/TrackballControls.js"></script>
+    <script src="js/libraries/WebGL.js"></script>
+    <script src="https://unpkg.com/mathjs@5.3.1/dist/math.js"></script>
+    <script src="https://unpkg.com/delaunator@3.0.2/delaunator.js"></script> 
+
+  <!-- Elastic Surface Fracture code -->
+    <script src="Config.js"></script>
+    <script src="js/esf/Buttons.js"></script>
+    <script src="js/delaunayTriangulation/DelaunayUtils.js"></script>
+    <script src="js/delaunayTriangulation/DelaunayHedge.js"></script>
+    <script src="js/delaunayTriangulation/DelaunayBucket.js"></script>
+    <script src="js/delaunayTriangulation/DelTriangulation.js"></script>
+    <script src="js/esf/EdgeVerts.js"></script>
+    <script src="js/esf/Utilities.js"></script>
+    <script src="js/esf/Plane.js"></script>
+    <script src="js/esf/Particle.js"></script>
+    <script src="js/esf/Spring.js"></script>
+    <script src="js/esf/Update.js"></script>
+    <script src="js/esf/Main.js"></script>
 
   </body>
 
