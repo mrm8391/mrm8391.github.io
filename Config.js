@@ -16,22 +16,22 @@ var CONF = {
 	//
 	//Plane and object properties
 	//
-	planeLevels: 50, //How many levels the plane is tesselated to
+	planeLevels: 25, //How many levels the plane is tesselated to
 	planeWidth: 50, //width of the plane in pixels
 	objectDescendRate: .125, //speed, in pixels, that the object descends
 	objectStopPoint: -50, //Where to stop object movement. null indicates no stop
-	maxStretchFactor: 300,
+	maxStretchFactor: 50,
 	cubeWidth: 10,
 	cubeStartHeight: 20,
 	showWireframe: false,
 	cubeVisible: true,
 	delaunayTriangulation: true,
 	tornFacesVisible: false,
-	tearable: false,
+	tearable: true,
 	
 	//
 	//Misc
 	//
-	startPaused: true,
+	startPaused: false,
 	cameraBottomView: false //set camera view to be below the plane
 }

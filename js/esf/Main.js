@@ -68,14 +68,14 @@ function initPlane(){
 		plane = Plane.DelaunayTriangulatedPlane(CONF.planeWidth, CONF.planeLevels);
 		let end_time = new Date();
 		let total_time = end_time - start_time;
-		console.log("Total seconds to generate this plane: " + total_time);
+		console.log("Total milliseconds to generate this plane: " + total_time);
 	}
 	else{
 		let start_time = new Date();
 		plane = Plane.crossTessellatedPlane(CONF.planeWidth, CONF.planeLevels);
 		let end_time = new Date();
 		let total_time = end_time - start_time;
-		console.log("Total seconds to generate this plane: " + total_time);
+		console.log("Total milliseconds to generate this plane: " + total_time);
 	}
 	let particles = [];
 	let springs = [];

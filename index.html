@@ -41,10 +41,10 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#">Maximillian</a>
+              <a class="nav-link js-scroll-trigger" href="https://github.com/mrm8391/">Maximillian</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#">Tristan</a>
+              <a class="nav-link js-scroll-trigger" href="https://github.com/3xstan">Tristan</a>
             </li>
           </ul>
         </div>
@@ -65,7 +65,7 @@
             <p class="text-faded mb-5">
               The goal of this project is to simulate the stretchy properties of rubber. A simple object is pressed into a rubber sheet, with the sheet conforming, and eventually tearing from the strain.
               </p>
-              <p class="text-faded">Code and technical details at: (placeholder, will put repository url here)</p>
+              <p class="text-faded">Code and technical details at: <a href="https://github.com/mrm8391/ElasticSurfaceFracture">https://github.com/mrm8391/ElasticSurfaceFracture</a></p>
           </div>
           <div class="col-lg-8 mx-auto">
             <a class="btn btn-primary btn-xl js-scroll-trigger" href="#algorithms">Project Details</a>
@@ -82,25 +82,100 @@
             <h2 class="section-heading">Project Overview</h2>
             <hr class="dark my-4">
             <p class="text-faded text-dark mb-4">
-                Discuss basics of project physics and algorithms here
-
                 With elastic surfaces, when an object pushes into it, that surface stretches out and conforms to the shape 
                 of the object. If the object keeps pushing into the surface, the surface will eventually begin to rip. 
                 The surface physics can be simplified to a mesh of spring mass pairs. To tear the surface, springs that reach 
                 their respective maximum lengths are removed from the particles' force dependencies. 
                 With a perfect grid mesh, these springs will rip in a relatively square pattern, which looks quite unrealistic. 
                 This gives motivation to use a less uniform pattern for the mesh, i.e. a Delaunay Triangulation.
-
+                <br>
+                <br>
+                <br>
                 Inputs:
+                <br>
+                <br>
                 The user of this simulation can experiment with different parameters. For the Delaunay Triangulation itself, 
                 the user may adjust the density of the plane tessellation. In other words, the higher the number, the more points 
                 that will be triangulated. This is set to a default 50.
-                Bullet points to cover:
-                -Background information about the problem.
-                -What are your specific inputs and outputs (show a visualization, if possible).
-                -What are the needs for the problem domain -- is it important that you find the optimal solution? why or why not?
-                -Describe your algorithm and show example results.
-                -Give a complexity analysis of your algorithm, and also show measured running time for different sizes of inputs
+                <br>
+                <br>
+                In terms of physics, the user input includes tearability, object descend rate (speed), width of the cube, 
+                z-oriented stopping point of the cube's motion, and the maximum stretch for any given spring before it rips.
+                <br>
+                <br>
+                Aesthetically, the user may also toggle between the default camera view and the below view, as well as 
+                toggle phong shading/wireframe appearance of the surface. If the user wishes to use a grid mesh instead of 
+                a Delaunay mesh, the user may edit Config.js from delaunayTriangulation = true, to delaunayTriangulation = false,
+                <br>
+                <br>
+                <br>
+                Output:
+                <br>
+                <br>
+                As a result of all these parameters, when the user clicks Initialize/Reset, a scene with the cube will appear, 
+                as well as generate the elastic surface. At any given time, the user may rotate the camera by left-click dragging,
+                pan the space by right-click dragging, and zoom in and out with when using a scroll wheel. 
+                <br>
+                <br>
+                When the user unchecks pause, the cube will begin moving down toward the surface. 
+                As the cube reaches the mesh, it'll start stretching the surface downward. The tearability, 
+                max stretch factor, and object descend rate will all determine how, when, and where the surface will rip. With 
+                a Delaunay Triangulated mesh, the tearing will happen in a less uniform, more organic pattern.
+                <br>
+                <br>
+                <br>
+                Algorithm and Complexity Analysis:
+                <br>
+                <br>
+                Since generating the Delaunay Triangulated spring mesh occurs as soon as the user clicks "initialize," 
+                it must take less than a second, or ideally less than O(n^2) time. If a grid mesh is used, this would take O(n) time,
+                where n is the number of total points, and n = d^2 + (d-1)^2, where d is the density given by the user. 
+                The algorithm we used to create the triangulation is the Incremental Construction algorithm. 
+                <br>
+                <br>
+                Each triangle acts as a bucket, which has its own vertices, but also a list of points 
+                that have not been assigned. Each new point may split a triangle into smaller triangles, and thus the unassigned 
+                points in this bucket must be rebucketed. Since each new point tends to split a triangle, the points that fall 
+                within each subtriangle will either be halved or divided into 3 partitions. New points do not split more than one 
+                (or two if the point lies on an edge) triangles, so the rebucketting process is, on average, O(log n). This is incrementally done 
+                for each point, which tacks on another O(n), and thus the overall construction takes O(n log n) time.
+                <br>
+                <br>
+                The actual physics updates force and velocity each frame, for each spring. The number of edges in the triangulation 
+                is 3n-3-h, where n is the number of vertices, and h is the number of vertices on the triangulation's convex hull. 
+                Thus, each frame of the animation takes O(3n-3-h)=O(3n-h)=O(n-h) time.
+                <br>
+                <br>
+                SPACE: Our implementation of the Delaunay Triangulation uses 3 different storage structures for the points (potentially n^3), 
+                2 different storage structures for the faces (there are 2n-2-h faces, so (2n^2 - 4 - h^2) space), and 1 
+                structure for the edges (there are 3n-3-h edges).<br>
+                Points: there is the original set of points, a map that contains the point index and the index of the triangle in 
+                which that point lies, and a return list of only the points that are in the final triangulation.<br>
+                Faces: there is the list of buckets, each containing their three points, their first edge, and the points contained 
+                within the bounds of the triangle; as well as a finalized list of the coordinates of the finalized faces of the 
+                triangulation.<br>
+                Edges: there is a map of edges containing the key (a Cantor Hash of the two points) and the value (a pair of halfedges).
+                <br>
+                <br>
+                <br>
+                Runtime Measurements:
+                <br>
+                <br>
+                Below are the average runtimes of generating the grid mesh and the Delaunay mesh, 
+                separately, at different densities. <br><br>
+                DISCLAIMER: Since our implementation of the Delaunay Triangulation is not complete/
+                does not terminate at the edge flip/swap test stage, this current state of the project uses the borrowed 
+                Delaunator code to generate the Delaunay mesh. This is what is used for the below runtimes.
+                (Note that the density d results in (d^2 + (d-1)^2) total points for both meshes):
+                <br>
+                <br>
+                Density: 5      Grid: 0ms       Delaunay: 2ms <br>
+                Density: 15     Grid: 1ms       Delaunay: 12ms <br>
+                Density: 30     Grid: 3ms       Delaunay: 50ms <br>
+                Density: 50     Grid: 9ms       Delaunay: 109ms <br>
+                Density: 70     Grid: 25ms      Delaunay: 220ms <br>
+                Density: 90     Grid: 35ms      Delaunay: 350ms <br>
+                Density: 100    Grid: 45ms      Delaunay: 410ms
                 </p>
           </div>
         </div>
@@ -129,6 +204,7 @@
           <div class="col-lg-12 text-center">
             <h2 class="section-heading">Simulation</h2>
             <hr class="my-4">
+            <p class="text-dark">Click initialize to render with current constants</p>
           </div>
 
           <div class="col-lg-9" id="simulationParent">
@@ -163,17 +239,14 @@
       <div class="simContainer">
         <div class="row">
           <div class="col-lg-8 mx-auto text-center">
-            <h2 class="section-heading text-faded">Resources (cite sources, used code, and related links)</h2>
+            <h2 class="section-heading text-faded">Resources</h2>
             <hr class="my-4">
             
             <div id="sourcelist">
               <ol>
-                  <!-- <li><p><a href="https://www.ti.inf.ethz.ch/ew/lehre/CG12/lecture/Chapter%2010.pdf">Voronoi Diagrams</a></p></li>
-                  <li><p><a href="https://research.engineering.wustl.edu/~pless/506/l17.html">Delaunay Triangulation</a></p></li>
-                  <li><p><a href="https://www.joesfer.com/?p=60">Voronoi Shattering</a></p></li>
-                  <li><p><a href="https://www.joesfer.com/?p=69">Voronoi Shattering 2</a></p></li>
-                  <li><p><a href="https://www.sciencedirect.com/science/article/pii/S0097849312000350">3D Convex Hulls</a></p></li> -->
                   <li><p><a href="http://www.freepik.com">Cover image at top of page designed by Freepik (used with license)</a></p></li>
+                  <li><p><a href=https://graphics.stanford.edu/~mdfisher/cloth.html>Material discussing the spring-madd model</a></p></li>
+                  <li><p><a href="https://research.engineering.wustl.edu/~pless/506/l17.html">Delaunay Triangulation</a></p></li>
               </ol>
             </div>
           </div>
