@@ -134,68 +134,17 @@ var Plane = {
 			[-boxStart, boxStart],
 			[-boxStart, -boxStart],
 			[-boxStart, boxStart]);
-			//[boxStart/2, boxStart],
-			//[0, boxStart],
-			//[-boxStart/2, boxStart]);*/
-		/*
-		// Generate points
-		for(let i = 0; i < levels + 1; i++){
-
-				let rowPt = new THREE.Vector3(
-					boxStart + (i*boxIncrement),
-					boxStart
-
-				);
-
-				points.push(rowPt);
-
-				rowPt = new THREE.Vector3(
-					boxStart + (i*boxIncrement),
-					-boxStart
-					
-				);
-
-				points.push(rowPt);
-			
-			if(i == 0 || i == levels){
-			for(let j = 0; j < levels + 1; j++){
-				let colPt = new THREE.Vector3(
-					boxStart,
-					boxStart + (j*boxIncrement)
-					
-				);
-
-				points.push(colPt);
-
-				colPt = new THREE.Vector3(
-					-boxStart,
-					boxStart + (j*boxIncrement)
-					
-				);
-
-				points.push(colPt);
-				}
-			}
-		}*/
-
 		
 
-		/*let points = [[168, 180], [168, 178], [168, 179], [168, 181], [168, 183], [167, 183], [167, 184], [165, 184], [162, 186], [164, 188], [161, 188], [160, 191], [158, 193], [156, 193], [152, 195], [152, 198], [150, 198], [147, 198], [148, 205], [150, 210], [148, 210], [148, 208], [145, 206], [142, 206], [140, 206], [138, 206], [135, 206], [135, 209], [131, 209], [131, 211], [127, 211], [124, 210], [120, 207], [120, 204], [120, 202], [124, 201], [123, 201], [125, 198], [125, 194], [127, 194], [127, 191], [130, 191], [132, 189], [134, 189], [134, 186], [136, 184], [134, 182], [134, 179], [134, 176], [136, 174], [139, 174], [141, 177], [142, 176], [144, 176], [147, 178], [148, 176], [151, 178], [154, 178], [153, 175], [152, 174], [152, 170], [152, 168], [150, 166], [148, 166], [147, 165], [145, 162], [146, 160], [146, 157], [146, 155], [144, 155], [142, 152], [140, 150], [138, 150], [138, 148], [140, 145], [140, 142], [140, 138], [139, 138], [137, 138], [135, 138], [133, 135], [132, 132], [129, 132], [128, 132], [124, 132], [124, 130], [123, 130], [118, 126], [116, 124], [112, 122], [109, 122], [105, 122], [102, 124], [100, 124], [97, 124], [95, 126], [92, 127], [89, 127], [88, 130], [85, 132], [80, 134], [72, 134], [69, 134], [65, 138], [64, 138], [58, 137], [56, 133], [52, 133], [51, 133], [48, 133], [44, 133], [41, 131], [38, 130], [35, 130], [32, 127], [30, 127], [27, 127], [24, 127], [24, 126], [23, 124], [20, 122], [17, 122], [16, 118], [15, 116], [15, 110], [18, 108], [20, 102], [24, 97], [28, 102], [28, 98], [26, 97], [28, 94], [27, 85], [29, 79], [32, 76], [39, 70], [44, 66], [48, 65], [53, 61], [53, 58], [51, 54], [54, 54], [52, 48], [51, 43], [48, 42], [49, 38], [48, 34], [51, 30], [53, 33], [58, 30], [61, 30], [60, 27], [64, 26], [68, 24]];
-		*/
-		// End result will look like a bunch of boxes with
-		// X's through the middle.
+		
+		// End result will be a delaunay triangulated surface.
 
 		// This will be tessellated by iterating through all
-		// the "box" points, connecting with the "cross" points
-		// as the boxes are traversed.
+		// the "delaunay" points.
 
 		let plane = new THREE.Geometry();
 
-		// Vertices are stored in a 1D array. Each "row" consists of box points
-		// or cross points, with rows alternating. Box or cross points
-		// can be found with the following indices:
-		// box[row][col] = vertices[(row * (2n + 1)) + col]
-		// cross[row][col] = vertices[((row+1)*(n+1)) + (row*n) + col]
+		// Vertices and faces are stored in 1D arrays.
 		let vertices = plane.vertices;
 		let faces = plane.faces;
 
@@ -303,95 +252,7 @@ var Plane = {
 
 			faces.push(new THREE.Face3(f0, f1, f2));
 		}
-
-		// Add all the unique delaunay points to vertices
-		// Hash each pair to ensure no duplicates are added.
-		//let addedVerts = new Set();
-/*
-		for(let i = 0; i < plane.faces.length; i++){
-			let v1 = plane.faces[i].a,
-				v2 = plane.faces[i].b,
-				v3 = plane.faces[i].c;
-
-			let hash1 = Utils.cantorHash(v1[0],v1[1]),
-				hash2 = Utils.cantorHash(v2[0],v2[1]),
-				hash3 = Utils.cantorHash(v3[0],v3[1]);
-
-			if(!addedVerts.has(hash1)){
-				vertices.push(new THREE.Vector3(v1[0],v1[1],0));
-				addedVerts.add(hash1);
-			}
-
-			if(!addedVerts.has(hash2)){
-				vertices.push(new THREE.Vector3(v2[0],v2[1],0));
-				addedVerts.add(hash2);
-			}
-
-			if(!addedVerts.has(hash3)){
-				vertices.push(new THREE.Vector3(v3[0],v3[1],0));
-				addedVerts.add(hash3);
-			}
-		}
-*/
-		/*let boxStart = 0 - (width / 2),
-			boxIncrement = (width / levels)
-			crossStart = boxStart + (boxIncrement / 2);
-
-		/*
-		// Generate points
-		for(let i = 0; i < levels + 1; i++){
-
-			// Create row of box points
-			for(let j = 0; j < levels + 1; j++){
-
-				let boxPt = new THREE.Vector3(
-					boxStart + (j*boxIncrement),
-					boxStart + (i*boxIncrement),
-					0
-				);
-
-				vertices.push(boxPt);
-
-			}
-
-			// Create row of cross points, if not at top level.
-			if(i!=levels){
-				for(let j = 0; j < levels; j++){
-
-						let crossPt = new THREE.Vector3(
-							crossStart + (j*boxIncrement),
-							crossStart + (i*boxIncrement),
-							0
-						);
-
-						vertices.push(crossPt);
-				}
-			}
-		}
-
-		// Helpers to get indices easily
-		let boxIndex = function(row, col){ return (row * (2*levels + 1)) + col; };
-		let crossIndex = function(row, col){ return ((row+1)*(levels+1)) + (row*levels) + col; };
-
-		// Generate faces
-		for(let i = 0; i < levels; i++){
-			for(let j = 0; j < levels; j++){
-
-				// Get all 5 points in current box
-				let b1 = Plane.boxIndex(i,j,levels),
-					b2 = Plane.boxIndex(i,j+1,levels),
-					b3 = Plane.boxIndex(i+1,j,levels),
-					b4 = Plane.boxIndex(i+1,j+1,levels),
-					cross = Plane.crossIndex(i,j,levels);
-
-				// Create all possible faces from these
-				faces.push(new THREE.Face3(b1,b2,cross));
-				faces.push(new THREE.Face3(b2,b4,cross));
-				faces.push(new THREE.Face3(b4,b3,cross));
-				faces.push(new THREE.Face3(b3,b1,cross));
-			}
-		}
-		*/
+		
 		return plane;
 	},
 

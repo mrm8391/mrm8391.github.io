@@ -35,7 +35,7 @@ class DelaunayBucket{
     assignHalfEdges(){
         //Create the halfedges for this face.
         
-
+        // Cantor hash the vertices' indices
         let hashAB = Utils.cantorHash(this.a,this.b);
         let hashBC = Utils.cantorHash(this.b,this.c);
         let hashCA = Utils.cantorHash(this.c,this.a);
@@ -54,7 +54,7 @@ class DelaunayBucket{
             if(abEdge[0].origin === this.a){
                 this.firstHedge = abEdge[0];
             }
-            else{
+            else if (abEdge[1].origin === this.a) {
                 this.firstHedge = abEdge[1];
             }
         }
@@ -71,7 +71,7 @@ class DelaunayBucket{
             if (bcEdge[0].origin === this.b){
                 bc = bcEdge[0];
             }
-            else{
+            else if(bcEdge[1].origin === this.b){
                 bc = bcEdge[1];
             }
         }
@@ -88,7 +88,7 @@ class DelaunayBucket{
             if (caEdge[0].origin === this.c){
                 ca = caEdge[0];
             }
-            else{
+            else if(caEdge[1].origin === this.c){
                 ca = caEdge[1];
             }
         }

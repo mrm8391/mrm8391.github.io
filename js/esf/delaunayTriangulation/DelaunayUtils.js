@@ -33,12 +33,12 @@ var DelaunayUtils = {
 
     determinant3x3(row1, row2, row3){
         let determ = (      row1[0] * row2[1] * row3[2]
-                        +   row2[0] * row3[1] * row1[2]
-                        +   row3[0] * row1[1] * row2[2] )
+                        +   row1[1] * row2[2] * row3[0]
+                        +   row1[2] * row2[0] * row3[1] )
 
-                    - (     row1[2] * row2[1] * row3[0]
-                        +   row2[2] * row3[1] * row1[0]
-                        +   row3[2] * row1[1] * row2[0]);
+                    - (     row3[0] * row2[1] * row1[2]
+                        +   row3[1] * row2[2] * row1[0]
+                        +   row3[2] * row2[0] * row1[1] );
 
         return determ;
     },
@@ -72,9 +72,10 @@ var DelaunayUtils = {
      * @param {*} d 
      */
     inTriangle(a, b, c, d){
-        if(Utils.determinant(a, b, d) >= 0 
-        && Utils.determinant(b, c, d) >= 0
-        && Utils.determinant(c, a, d) >= 0){
+        //For now, just get rid of ontriangle points
+        if(Utils.determinant(a, b, d) > 0 
+        && Utils.determinant(b, c, d) > 0
+        && Utils.determinant(c, a, d) > 0){
             return true;
         }
         else{

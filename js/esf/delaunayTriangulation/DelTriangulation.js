@@ -13,10 +13,10 @@ var DelTriangulation = {
     */
     boundingTriangle: 
             //these points are not within the main plane bounds, 
-            //so they should not be added to the list of sites.
+            //so they should not be added to the list of final triangles.
             [[-CONF.planeWidth/2 - 1, -CONF.planeWidth/2 - 1],
-            [CONF.planeWidth * 1.5, -CONF.planeWidth/2],
-            [-CONF.planeWidth/2, CONF.planeWidth * 1.5]],
+            [CONF.planeWidth * 1.5 + 1, -CONF.planeWidth/2 - 1],
+            [-CONF.planeWidth/2 - 1, CONF.planeWidth * 1.5 + 1]],
 
     //For the purposes of this implementation of a DCEL, for Delaunay Triangulation,
     //sites are simply in the form [x,y] and do not contain any other data or metadata
@@ -68,14 +68,17 @@ var DelTriangulation = {
             DelTriangulation.boundingTriangle[2]);
         
         let boundBucket = new DelaunayBucket(0, 1, 2, 0);
+        //DelTriangulation.allBuckets.push(boundBucket);
         boundBucket.assignHalfEdges();
         
         for(let v = 0; v < DelTriangulation.boundingTriangle.length; v++){
+            addedSites.add();
             let hashPt = Utils.cantorHash(
                 DelTriangulation.boundingTriangle[v][0] + CONF.planeWidth + 1 + CONF.planeWidth/2, 
                 DelTriangulation.boundingTriangle[v][1] + CONF.planeWidth/2) 
                 + CONF.planeWidth/2 + 1;
-                DelTriangulation.siteLocations.set(v, boundBucket.id);
+                addedSites.add(hashPt);
+                DelTriangulation.siteLocations.set(v, -1);
         }
 
 
@@ -130,6 +133,7 @@ var DelTriangulation = {
             DelTriangulation.delaunaySites.push(newSite);
 
             let pab = new DelaunayBucket(vIndex, triang.a, triang.b, triang.id);
+            //set the original bucket's value to that of the first new one
             DelTriangulation.allBuckets[triang.id] = pab;
             pab.assignHalfEdges();
 
@@ -183,12 +187,14 @@ var DelTriangulation = {
         let pdb = new DelaunayBucket(p, d, ab.end, pdbID);
         pdb.assignHalfEdges();
 
-        DelTriangulation.allBuckets[padID] = pad;
-        DelTriangulation.allBuckets[pdbID] = pdb;
-
+        // Rebucket first
         DelTriangulation.rebucket2(pab, DelTriangulation.allBuckets[pdbID],
             pad, pdb);
 
+        // Then reassign the indices to the new triangles (2 for 2)
+        DelTriangulation.allBuckets[padID] = pad;
+        DelTriangulation.allBuckets[pdbID] = pdb;
+        
         DelTriangulation.swapTest(pad);
         DelTriangulation.swapTest(pdb);
     },
@@ -213,7 +219,13 @@ var DelTriangulation = {
                 pad.addPoint(point);
                 DelTriangulation.siteLocations.set(point, pad.id);
             }
-            else{
+            // For now, remove ontriangle sites
+            else if(DelaunayUtils.inTriangle(
+                DelTriangulation.allSites[pdb.a],
+                DelTriangulation.allSites[pdb.b],
+                DelTriangulation.allSites[pdb.c],
+                DelTriangulation.allSites[point]
+            )){
                 pdb.addPoint(point);
                 DelTriangulation.siteLocations.set(point, pdb.id);
             }
@@ -234,7 +246,12 @@ var DelTriangulation = {
                 pad.addPoint(point);
                 DelTriangulation.siteLocations.set(point, pad.id);
             }
-            else{
+            else if(DelaunayUtils.inTriangle(
+                DelTriangulation.allSites[pdb.a],
+                DelTriangulation.allSites[pdb.b],
+                DelTriangulation.allSites[pdb.c],
+                DelTriangulation.allSites[point]
+            )){
                 pdb.addPoint(point);
                 DelTriangulation.siteLocations.set(point, pdb.id);
             }
@@ -254,6 +271,8 @@ var DelTriangulation = {
     rebucket3(abc, pab, pbc, pca){
         for(let v = abc.containedPoints.length - 1; v >= 0; v--){
             let p = abc.containedPoints[v];
+
+
             if(DelaunayUtils.inTriangle(
                 DelTriangulation.allSites[pab.a], 
                 DelTriangulation.allSites[pab.b], 
@@ -284,7 +303,9 @@ var DelTriangulation = {
         }
     },
 
-
+    /**
+     * Later on, change this to exclude any triangles that has a boundbucket point in it
+     */
     finalizeTriangles(){
         for(let t of DelTriangulation.allBuckets){
             let a = DelTriangulation.allSites[t.a];
