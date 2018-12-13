@@ -163,19 +163,17 @@
                 <br>
                 Below are the average runtimes of generating the grid mesh and the Delaunay mesh, 
                 separately, at different densities. <br><br>
-                DISCLAIMER: Since our implementation of the Delaunay Triangulation is not complete/
-                does not terminate at the edge flip/swap test stage, this current state of the project uses the borrowed 
-                Delaunator code to generate the Delaunay mesh. This is what is used for the below runtimes.
+                This uses both the Delaunator code as well as our implementation, which can be toggled.
                 (Note that the density d results in (d^2 + (d-1)^2) total points for both meshes):
                 <br>
                 <br>
-                Density: 5     | Grid: 0ms     |  Delaunay: 2ms <br>
-                Density: 15    | Grid: 1ms     |  Delaunay: 12ms <br>
-                Density: 30    | Grid: 3ms     |  Delaunay: 50ms <br>
-                Density: 50    | Grid: 9ms     |  Delaunay: 109ms <br>
-                Density: 70    | Grid: 25ms    |  Delaunay: 220ms <br>
-                Density: 90    | Grid: 35ms    |  Delaunay: 350ms <br>
-                Density: 100   | Grid: 45ms    |  Delaunay: 410ms
+                Density: 5     | Grid: 0ms     |  Delaunay: 2ms     | Our DT: 6ms<br>
+                Density: 15    | Grid: 1ms     |  Delaunay: 12ms    | Our DT: 55ms<br>
+                Density: 30    | Grid: 3ms     |  Delaunay: 50ms    | Our DT: 400ms<br>
+                Density: 50    | Grid: 9ms     |  Delaunay: 109ms   | Our DT: 1000ms<br>
+                Density: 70    | Grid: 25ms    |  Delaunay: 220ms   | Our DT: 2000ms<br>
+                Density: 90    | Grid: 35ms    |  Delaunay: 350ms   | Our DT: 3500ms<br>
+                Density: 100   | Grid: 45ms    |  Delaunay: 410ms   | Our DT: 4500ms
                 </p>
           </div>
         </div>
@@ -225,6 +223,7 @@
             <label class="ConfOption">Plane wireframe visible: <input id="wireframeId" type="checkbox"></label>
             
             <p><b>Geometry related constants (changes apply on simulation reset/initialization)</b></p>
+            <label class="ConfOption">Use our version of Delaunay Triangulation: <input id="ourDTId" type="checkbox"></label>
             <label class="ConfOption">Density of plane tesselation: <input type="text" id="planeLevelId"></label>
             <label class="ConfOption">Object descend rate: <input type="text" id="objectDescendId"></label>
             <label class="ConfOption">Width of cube object: <input type="text" id="cubeWidthId"></label>
@@ -277,10 +276,10 @@
   <!-- Elastic Surface Fracture code -->
     <script src="Config.js"></script>
     <script src="js/esf/Buttons.js"></script>
-    <script src="js/delaunayTriangulation/DelaunayUtils.js"></script>
-    <script src="js/delaunayTriangulation/DelaunayHedge.js"></script>
-    <script src="js/delaunayTriangulation/DelaunayBucket.js"></script>
-    <script src="js/delaunayTriangulation/DelTriangulation.js"></script>
+    <script src="js/esf/delaunayTriangulation/DelaunayUtils.js"></script>
+    <script src="js/esf/delaunayTriangulation/DelaunayHedge.js"></script>
+    <script src="js/esf/delaunayTriangulation/DelaunayBucket.js"></script>
+    <script src="js/esf/delaunayTriangulation/DelTriangulation.js"></script>
     <script src="js/esf/EdgeVerts.js"></script>
     <script src="js/esf/Utilities.js"></script>
     <script src="js/esf/Plane.js"></script>

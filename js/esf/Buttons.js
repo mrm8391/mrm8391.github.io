@@ -8,6 +8,7 @@ var Buttons = {
 	cubeVisibleInput: document.getElementById('cubeVisibleId'),
 	cameraButton: document.getElementById('cameraId'),
 	wireframeInput: document.getElementById('wireframeId'),
+	ourDTInput: document.getElementById('ourDTId'),
 
 	planeLevelBox: document.getElementById('planeLevelId'),
 	objectDescendBox: document.getElementById('objectDescendId'),
@@ -33,6 +34,7 @@ var Buttons = {
 		Buttons.cubeVisibleInput.onclick = function() {CONF.cubeVisible = this.checked; Update.toggleObjectVisibility(this.checked);};
 		Buttons.cameraButton.onclick = function() {Update.toggleCamera();};
 		Buttons.wireframeInput.onclick = function() {CONF.showWireframe = this.checked; Update.toggleWireframe(this.checked);};
+		Buttons.ourDTInput.onclick = function() {CONF.ourDT = this.checked;};
 
 		Buttons.initialize();
 

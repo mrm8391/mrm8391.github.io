@@ -147,24 +147,36 @@ var Plane = {
 		// Vertices and faces are stored in 1D arrays.
 		let vertices = plane.vertices;
 		let faces = plane.faces;
+		let triangs = null;
+		if(CONF.ourDT){
+			DelTriangulation.reset();
 
-		/*DelTriangulation.reset();
-
-		let triangs = DelTriangulation.triangulate(points);*/
-
-		let delaunay = Delaunator.from(points);
-		let triangs = delaunay.triangles;
-
+			triangs = DelTriangulation.triangulate(points);
+		}
+		else{
+			let delaunay = Delaunator.from(points);
+			triangs = delaunay.triangles;
+		}
 		// Add the triangles from the generated delaunay triangulation
 		// to faces
 		let addedVerts = new Map();
 		let vertIndex = 0;
 		for(let i = 0; i < triangs.length; i+=3){
-			//2D versions
-			let tPt0 = points[triangs[i]];
-			let tPt1 = points[triangs[i+1]];
-			let tPt2 = points[triangs[i+2]];
-			
+			let tPt0 = [0,0];
+			let tPt1 = [0,0];
+			let tPt2 = [0,0];
+			if(CONF.ourDT){
+				//2D versions
+				tPt0 = triangs[i];
+				tPt1 = triangs[i+1];
+				tPt2 = triangs[i+2];
+			}
+			else{
+				//2D versions
+				tPt0 = points[triangs[i]];
+				tPt1 = points[triangs[i+1]];
+				tPt2 = points[triangs[i+2]];
+			}
 			// Cantor hashes of the x and y coordinates for each vertex
 			let hash0 = Utils.cantorHash(tPt0[0] + width + 1 - boxStart, tPt0[1] - boxStart) - boxStart + 1,
 				hash1 = Utils.cantorHash(tPt1[0] + width + 1 - boxStart, tPt1[1] - boxStart) - boxStart + 1,

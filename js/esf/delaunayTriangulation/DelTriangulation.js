@@ -114,43 +114,46 @@ var DelTriangulation = {
 
     //Insert
     subTriangulate(vIndex){
-        //let vIndex = Math.floor(Math.random() * triang.containedPoints.length);
-        let newSite = DelTriangulation.allSites[vIndex];
-        let triang = DelTriangulation.allBuckets[DelTriangulation.siteLocations.get(vIndex)];
+        siteLoc = DelTriangulation.siteLocations.get(vIndex);
+        if(siteLoc >= 0){
+            //let vIndex = Math.floor(Math.random() * triang.containedPoints.length);
+            let newSite = DelTriangulation.allSites[vIndex];
+            let triang = DelTriangulation.allBuckets[DelTriangulation.siteLocations.get(vIndex)];
 
-        //if the point is on the edge of a triangle, replace the two incident 
-        //faces of that edge with new 4 triangles. SwapTest each of these 
-        //new triangles
+            //if the point is on the edge of a triangle, replace the two incident 
+            //faces of that edge with new 4 triangles. SwapTest each of these 
+            //new triangles
 
-        //If this point is just inside, do the normal insertion
-        if(DelaunayUtils.onTriangle(
-            DelTriangulation.allSites[triang.a], 
-            DelTriangulation.allSites[triang.b], 
-            DelTriangulation.allSites[triang.c], 
-            newSite) < 0)
-        {
-            //Add the new site to the final list of sites/vertices
-            DelTriangulation.delaunaySites.push(newSite);
+            //If this point is just inside, do the normal insertion
+            if(DelaunayUtils.onTriangle(
+                DelTriangulation.allSites[triang.a], 
+                DelTriangulation.allSites[triang.b], 
+                DelTriangulation.allSites[triang.c], 
+                newSite) < 0)
+            {
+                //Add the new site to the final list of sites/vertices
+                DelTriangulation.delaunaySites.push(newSite);
 
-            let pab = new DelaunayBucket(vIndex, triang.a, triang.b, triang.id);
-            //set the original bucket's value to that of the first new one
-            DelTriangulation.allBuckets[triang.id] = pab;
-            pab.assignHalfEdges();
+                let pab = new DelaunayBucket(vIndex, triang.a, triang.b, triang.id);
+                //set the original bucket's value to that of the first new one
+                DelTriangulation.allBuckets[triang.id] = pab;
+                pab.assignHalfEdges();
 
-            let pbc = new DelaunayBucket(vIndex, triang.b, triang.c, 
-                DelTriangulation.allBuckets.length);
-            DelTriangulation.allBuckets.push(pbc);
-            pbc.assignHalfEdges();
+                let pbc = new DelaunayBucket(vIndex, triang.b, triang.c, 
+                    DelTriangulation.allBuckets.length);
+                DelTriangulation.allBuckets.push(pbc);
+                pbc.assignHalfEdges();
 
-            let pca = new DelaunayBucket(vIndex, triang.c, triang.a, 
-                DelTriangulation.allBuckets.length);
-            DelTriangulation.allBuckets.push(pca);
-            pca.assignHalfEdges();
+                let pca = new DelaunayBucket(vIndex, triang.c, triang.a, 
+                    DelTriangulation.allBuckets.length);
+                DelTriangulation.allBuckets.push(pca);
+                pca.assignHalfEdges();
 
-            DelTriangulation.rebucket3(triang, pab, pbc, pca);
-            DelTriangulation.swapTest(pab);
-            DelTriangulation.swapTest(pbc);
-            DelTriangulation.swapTest(pca);
+                DelTriangulation.rebucket3(triang, pab, pbc, pca);
+                DelTriangulation.swapTest(pab);
+                DelTriangulation.swapTest(pbc);
+                DelTriangulation.swapTest(pca);
+            }
         }
     },
 
@@ -158,7 +161,7 @@ var DelTriangulation = {
         ab = pab.firstHedge.nextHedge;
         //ab is NOT part of the convex hull of the triangulation
         if(!(ab.twin.incidentFace === null)){
-            let d = ab.twin.nextHedge.end;
+            d = ab.twin.nextHedge.end;
             if(DelaunayUtils.inCircle(
                 DelTriangulation.allSites[pab.a],
                 DelTriangulation.allSites[pab.b],
@@ -176,11 +179,11 @@ var DelTriangulation = {
      * @param {DelaunayBucket} pab
      */
     edgeFlip(ab, pab, d){
-        let p = pab.a;
+        p = pab.a;
         //d is already a parameter
 
-        let padID = pab.id;
-        let pdbID = ab.twin.incidentFace.id;
+        padID = pab.id;
+        pdbID = ab.twin.incidentFace;
 
         let pad = new DelaunayBucket(p, ab.origin, d, padID);
         pad.assignHalfEdges();
@@ -229,9 +232,12 @@ var DelTriangulation = {
                 pdb.addPoint(point);
                 DelTriangulation.siteLocations.set(point, pdb.id);
             }
+            else{
+                DelTriangulation.siteLocations.set(point, -1);
+            }
 
             //Remove the point from the old triangle's list
-            pab.containedPoints.pop(v);
+            pab.containedPoints.pop();
         }
         
         for(let v = dba.containedPoints.length - 1; v >= 0; v--){
@@ -255,9 +261,12 @@ var DelTriangulation = {
                 pdb.addPoint(point);
                 DelTriangulation.siteLocations.set(point, pdb.id);
             }
+            else{
+                DelTriangulation.siteLocations.set(point, -1);
+            }
 
             //Remove the point from the old triangle's list
-            dba.containedPoints.pop(v);
+            dba.containedPoints.pop();
         }
     },
 
@@ -299,7 +308,7 @@ var DelTriangulation = {
             }
 
             //Remove the point from the old triangle's list
-            abc.containedPoints.pop(v);
+            abc.containedPoints.pop();
         }
     },
 

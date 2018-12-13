@@ -25,6 +25,7 @@
             <label class="ConfOption">Plane wireframe visible: <input id="wireframeId" type="checkbox"></label>
             
             <h2>Geometry related constants (changes apply on simulation reset/initialization)</h2>
+            <label class="ConfOption">Use our version of Delaunay Triangulation: <input id="ourDTId" type="checkbox"></label>
             <label class="ConfOption">Density of plane tesselation: <input type="text" id="planeLevelId"></label>
             <label class="ConfOption">Object descend rate: <input type="text" id="objectDescendId"></label>
             <label class="ConfOption">Width of cube object: <input type="text" id="cubeWidthId"></label>
@@ -44,10 +45,10 @@
   <!-- Elastic Surface Fracture code -->
     <script src="Config.js"></script>
     <script src="js/esf/Buttons.js"></script>
-    <script src="js/delaunayTriangulation/DelaunayUtils.js"></script>
-    <script src="js/delaunayTriangulation/DelaunayHedge.js"></script>
-    <script src="js/delaunayTriangulation/DelaunayBucket.js"></script>
-    <script src="js/delaunayTriangulation/DelTriangulation.js"></script>
+    <script src="js/esf/delaunayTriangulation/DelaunayUtils.js"></script>
+    <script src="js/esf/delaunayTriangulation/DelaunayHedge.js"></script>
+    <script src="js/esf/delaunayTriangulation/DelaunayBucket.js"></script>
+    <script src="js/esf/delaunayTriangulation/DelTriangulation.js"></script>
     <script src="js/esf/EdgeVerts.js"></script>
     <script src="js/esf/Utilities.js"></script>
     <script src="js/esf/Plane.js"></script>

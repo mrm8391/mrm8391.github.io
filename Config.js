@@ -26,6 +26,7 @@ var CONF = {
 	showWireframe: false,
 	cubeVisible: true,
 	delaunayTriangulation: true,
+	ourDT: false,
 	tornFacesVisible: false,
 	tearable: true,
 	

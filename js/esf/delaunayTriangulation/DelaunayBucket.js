@@ -81,7 +81,7 @@ class DelaunayBucket{
         if(!DelTriangulation.allEdges.has(hashCA)){
             ca = new DelaunayHedge(this.c, this.a);
             ca.setTwins();
-            DelTriangulation.allEdges.set(hashBC, [ca, ca.twin]);
+            DelTriangulation.allEdges.set(hashCA, [ca, ca.twin]);
         }
         else{
             let caEdge = DelTriangulation.allEdges.get(hashCA);
